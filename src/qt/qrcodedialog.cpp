@@ -44,7 +44,7 @@ void QRCodeDialog::setModel(OptionsModel *model)
     if (model)
         connect(model, SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
 
-    // update the display unit, to not use the default ("BTC")
+    // update the display unit, to not use the default ("CPC")
     updateDisplayUnit();
 }
 
@@ -83,7 +83,7 @@ void QRCodeDialog::genCode()
 
 QString QRCodeDialog::getURI()
 {
-    QString ret = QString("bitcoin:%1").arg(address);
+    QString ret = QString("compass:%1").arg(address);
     int paramCount = 0;
 
     ui->outUri->clear();
@@ -92,8 +92,8 @@ QString QRCodeDialog::getURI()
     {
         if (ui->lnReqAmount->validate())
         {
-            // even if we allow a non BTC unit input in lnReqAmount, we generate the URI with BTC as unit (as defined in BIP21)
-            ret += QString("?amount=%1").arg(BitcoinUnits::format(BitcoinUnits::BTC, ui->lnReqAmount->value()));
+            // even if we allow a non CPC unit input in lnReqAmount, we generate the URI with CPC as unit (as defined in BIP21)
+            ret += QString("?amount=%1").arg(BitcoinUnits::format(BitcoinUnits::CPC, ui->lnReqAmount->value()));
             paramCount++;
         }
         else
