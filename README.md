@@ -1,7 +1,7 @@
 Compass integration/staging tree
 ================================
 
-http://www.coingen.io
+http://www.compasscoin.org
 
 Copyright (c) 2009-2013 Bitcoin Developers
 
@@ -15,7 +15,7 @@ out collectively by the network. Compass is also the name of the open source
 software which enables the use of this currency.
 
 For more information, as well as an immediately useable, binary version of
-the Compass client software, see http://www.coingen.io.
+the Compass client software, see http://www.compasscoin.org
 
 License
 -------
