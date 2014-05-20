@@ -48,7 +48,8 @@ bool fBenchmark = false;
 bool fTxIndex = false;
 unsigned int nCoinCacheSize = 5000;
 //unsigned 
-int KGWStartBlock = 23400;
+//int KGWStartBlock = 23400;
+int KGWStartBlock = 123; // testing
 
 /** Fees smaller than this (in satoshi) are considered zero fee (for transaction creation) */
 int64 CTransaction::nMinTxFee = 10000;  // Override with -mintxfee
