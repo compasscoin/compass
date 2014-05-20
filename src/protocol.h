@@ -15,10 +15,16 @@
 #include <string>
 #include "uint256.h"
 
+#define KGW_TEST
+
 extern bool fTestNet;
 static inline unsigned short GetDefaultPort(const bool testnet = fTestNet)
 {
-    return testnet ? 14220 : 4220;
+#ifdef KGW_TEST
+    return testnet ? 14221 : 4221;
+#else    
+    return testnet ? 14220 : 4220;    
+#endif    
 }
 
 
