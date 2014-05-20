@@ -1185,15 +1185,21 @@ void MapPort(bool)
 
 
 
-
+#define KGW_TEST 
 // DNS seeds
 // Each pair gives a source name and a seed name.
 // The first name is used as information source for addrman.
 // The second name should resolve to a list of seed addresses.
 static const char *strMainNetDNSSeed[][2] = {
+#ifdef KGW_TEST    
+    {"bitbank.am", "95.85.46.218"},
+    {NULL, NULL}
+#else
     {"seedone.compasscoin.org", "seedtwo.compasscoin.org"},
     {NULL, NULL}
-};
+#endif
+}
+;
 
 static const char *strTestNetDNSSeed[][2] = {
     {"seedone.compasscoin.org", "testnet-seed.compasscoin.org"},
