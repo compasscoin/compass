@@ -47,7 +47,8 @@ bool fReindex = false;
 bool fBenchmark = false;
 bool fTxIndex = false;
 unsigned int nCoinCacheSize = 5000;
-unsigned int KGWStartBlock = 23400;
+//unsigned 
+int KGWStartBlock = 23400;
 
 /** Fees smaller than this (in satoshi) are considered zero fee (for transaction creation) */
 int64 CTransaction::nMinTxFee = 10000;  // Override with -mintxfee
@@ -1181,7 +1182,8 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
 // first period diff-mode
 unsigned int static GetNextWorkRequired_V1(const CBlockIndex* pindexLast, const CBlockHeader *pblock)
 {
-    unsigned int nProofOfWorkLimit = Params().ProofOfWorkLimit().GetCompact();
+    //unsigned int nProofOfWorkLimit = Params().ProofOfWorkLimit().GetCompact();
+    unsigned int nProofOfWorkLimit = bnProofOfWorkLimit.GetCompact();
 
     // Genesis block
     if (pindexLast == NULL)
@@ -1190,7 +1192,8 @@ unsigned int static GetNextWorkRequired_V1(const CBlockIndex* pindexLast, const 
 	// Only change once per interval
     if ((pindexLast->nHeight+1) % nInterval != 0)
     {
-        if (TestNet())
+        //if (TestNet())
+        if (fTestNet)
         {
             // Special difficulty rule for testnet:
             // If the new block's timestamp is more than 2* 10 minutes
@@ -1212,9 +1215,10 @@ unsigned int static GetNextWorkRequired_V1(const CBlockIndex* pindexLast, const 
 
     // This fixes an issue where a 51% attack can change difficulty at will.
     // Go back the full period unless it's the first retarget after genesis. Code courtesy of Art Forz
-    int blockstogoback = nInterval-1;
-    if ((pindexLast->nHeight+1) != nInterval)
-        blockstogoback = nInterval;
+    
+    // int blockstogoback = nInterval-1;
+    // if ((pindexLast->nHeight+1) != nInterval)
+    //     blockstogoback = nInterval;
         
 
     // Go back by what we want to be 14 days worth of blocks
@@ -1238,8 +1242,11 @@ unsigned int static GetNextWorkRequired_V1(const CBlockIndex* pindexLast, const 
     bnNew *= nActualTimespan;
     bnNew /= nTargetTimespan;
 
-    if (bnNew > Params().ProofOfWorkLimit())
-        bnNew = Params().ProofOfWorkLimit();
+    //if (bnNew > Params().ProofOfWorkLimit())
+    //    bnNew = Params().ProofOfWorkLimit();
+    
+    if (bnNew > bnProofOfWorkLimit)
+        bnNew = bnProofOfWorkLimit;
 
     /// debug print
     printf("GetNextWorkRequired RETARGET\n");
@@ -1267,7 +1274,10 @@ unsigned int static KimotoGravityWell(const CBlockIndex* pindexLast, const CBloc
         double EventHorizonDeviationFast;
         double EventHorizonDeviationSlow;
         
-    if (BlockLastSolved == NULL || BlockLastSolved->nHeight == 0 || (uint64)BlockLastSolved->nHeight < PastBlocksMin) { return Params().ProofOfWorkLimit().GetCompact(); }
+    if (BlockLastSolved == NULL || BlockLastSolved->nHeight == 0 || (uint64)BlockLastSolved->nHeight < PastBlocksMin) 
+       //{ return Params().ProofOfWorkLimit().GetCompact(); }
+         { return bnProofOfWorkLimit.GetCompact(); }
+
        
      int64 LatestBlockTime = BlockLastSolved->GetBlockTime();
      
@@ -1315,7 +1325,9 @@ unsigned int static KimotoGravityWell(const CBlockIndex* pindexLast, const CBloc
                 bnNew *= PastRateActualSeconds;
                 bnNew /= PastRateTargetSeconds;
         }
-    if (bnNew > Params().ProofOfWorkLimit()) { bnNew = Params().ProofOfWorkLimit(); }
+    
+        //if (bnNew > Params().ProofOfWorkLimit()) { bnNew = Params().ProofOfWorkLimit(); }
+    if (bnNew > bnProofOfWorkLimit) bnNew = bnProofOfWorkLimit;
         
     /// debug print (commented out due to spamming logs when the loop above breaks)
 printf("Difficulty Retarget - Kimoto Gravity Well\n");
@@ -1348,7 +1360,8 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
 //Choose the right diffMode
 	
         int DiffMode = 1; // legacy diff-mode
-        if (TestNet()) {
+        //if (TestNet()) {
+        if (fTestNet) {
                 if (pindexLast->nHeight+1 >= 120) { DiffMode = 2; } // First period
         }
         else {

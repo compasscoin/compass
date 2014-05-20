@@ -493,7 +493,8 @@ bool AppInit2(boost::thread_group& threadGroup)
 #endif
 
     // ********************************************************* Step 2: parameter interactions
-    fTestNet = false;
+    //fTestNet = false;
+    fTestNet = GetBoolArg("-testnet");
     SetGenesisHash();
 
     if (mapArgs.count("-bind")) {
