@@ -1368,7 +1368,13 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
         else {
          if (pindexLast->nHeight+1 >= KGWStartBlock) { DiffMode = 2; } // Kimoto after KGWStartBlock
         }
-        
+
+ if (DiffMode == 1) {
+   printf("Difficulty Retarget - classicl\n");	
+ }else  if (DiffMode == 2) {
+   printf("Difficulty Retarget - Kimoto Gravity Well\n");
+ }        
+
         if (DiffMode == 1) { return GetNextWorkRequired_V1(pindexLast, pblock); } // Legacy diff mode
         else if (DiffMode == 2) { return GetNextWorkRequired_V2(pindexLast, pblock); } // KGW
         return GetNextWorkRequired_V2(pindexLast, pblock); // KGW
