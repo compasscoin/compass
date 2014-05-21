@@ -15,7 +15,7 @@
 #include <string>
 #include "uint256.h"
 
-#define KGW_TEST
+//#define KGW_TEST
 
 extern bool fTestNet;
 static inline unsigned short GetDefaultPort(const bool testnet = fTestNet)
