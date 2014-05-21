@@ -48,8 +48,8 @@ bool fBenchmark = false;
 bool fTxIndex = false;
 unsigned int nCoinCacheSize = 5000;
 //unsigned 
-//int KGWStartBlock = 23400;
-int KGWStartBlock = 123; // testing
+int KGWStartBlock = 23400;
+//int KGWStartBlock = 123; // testing
 
 /** Fees smaller than this (in satoshi) are considered zero fee (for transaction creation) */
 int64 CTransaction::nMinTxFee = 10000;  // Override with -mintxfee
@@ -1369,11 +1369,11 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
          if (pindexLast->nHeight+1 >= KGWStartBlock) { DiffMode = 2; } // Kimoto after KGWStartBlock
         }
 
- if (DiffMode == 1) {
-   printf("Difficulty Retarget - classicl\n");	
- }else  if (DiffMode == 2) {
-   printf("Difficulty Retarget - Kimoto Gravity Well\n");
- }        
+ //if (DiffMode == 1) {
+ //  printf("Difficulty Retarget - classicl\n");	
+ //}else  if (DiffMode == 2) {
+//   printf("Difficulty Retarget - Kimoto Gravity Well\n");
+// }        
 
         if (DiffMode == 1) { return GetNextWorkRequired_V1(pindexLast, pblock); } // Legacy diff mode
         else if (DiffMode == 2) { return GetNextWorkRequired_V2(pindexLast, pblock); } // KGW
