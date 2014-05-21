@@ -1344,7 +1344,8 @@ printf("After: %08x %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString().c_s
 // Using KGW
 unsigned int static GetNextWorkRequired_V2(const CBlockIndex* pindexLast, const CBlockHeader *pblock)
 {
-        static const int64 BlocksTargetSpacing = 2 *60; // 120 sec
+        //static const int64 BlocksTargetSpacing = 2 *60; // 120 sec
+        static const int64 BlocksTargetSpacing =  10 * 60; // 600 sec
         unsigned int TimeDaySeconds = 60 * 60 * 24;
         int64 PastSecondsMin = TimeDaySeconds * 0.25;
         int64 PastSecondsMax = TimeDaySeconds * 7;
