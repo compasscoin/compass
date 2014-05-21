@@ -1185,7 +1185,7 @@ void MapPort(bool)
 
 
 
-#define KGW_TEST 
+//#define KGW_TEST 
 // DNS seeds
 // Each pair gives a source name and a seed name.
 // The first name is used as information source for addrman.
